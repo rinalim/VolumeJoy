@@ -29,6 +29,8 @@ PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
 js_fds = []
+btn_up = -1
+btn_down = -1
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
@@ -93,11 +95,11 @@ def process_event(event):
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         #print vol
 
-        if js_number == 4:
+        if js_number == btn_down:
             print "Decrease volume..."
             vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
             run_cmd("amixer set PCM -- " + str(vol-6) + "%")
-        elif js_number == 5:
+        elif js_number == btn_up:
             print "Increase volume..."
             vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
             run_cmd("amixer set PCM -- " + str(vol+6) + "%")
@@ -116,6 +118,15 @@ def process_event(event):
     return True
 
 def main():
+    
+    if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
+        return False
+
+    f = open(PATH_VOLUMEJOY + "button.cfg", 'r')
+    line = f.readline()
+    words = line.split()
+    btn_up = int(words[0])
+    btn_down = int(words[1])
 
     js_fds=[]
     rescan_time = time.time()
