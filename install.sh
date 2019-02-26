@@ -12,6 +12,7 @@
 
 sudo cp ./libraspidmx.so.1 /usr/lib
 
+rm -rf /opt/retropie/configs/all/VolumeJoy/
 mkdir /opt/retropie/configs/all/VolumeJoy/
 cp -f -r ./VolumeJoy /opt/retropie/configs/all/
 
