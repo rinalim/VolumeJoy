@@ -1,14 +1,5 @@
 #!/usr/bin/python
 
-# This file is part of The RetroPie Project
-# 
-# The RetroPie Project is the legal property of its developers, whose names are
-# too numerous to list here. Please refer to the COPYRIGHT.md file distributed with this source.
-# 
-# See the LICENSE.md file at the top-level directory of this distribution and 
-# at https://raw.githubusercontent.com/RetroPie/RetroPie-Setup/master/LICENSE.md
-#
-
 import os, sys, struct, time, fcntl, termios, signal
 import curses, errno, re
 from pyudev import Context
@@ -33,6 +24,7 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
+PATH_PNGVOLUME	"/opt/retropie/configs/all/PngVolume/pngvolume"	
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -119,7 +111,7 @@ def process_event(event):
             vol = 100
 
         run_cmd("killall pngvolume")
-        os.system("./pngvolume -b0x0000 -l30000 -t1000 volume" + str(vol/6) + ".png &")
+        os.system(PATH_PNGVOLUME + " -b0x0000 -l30000 -t1000 volume" + str(vol/6) + ".png &")
 
     return True
 
