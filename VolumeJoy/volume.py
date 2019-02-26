@@ -119,6 +119,8 @@ def process_event(event):
 
 def main():
     
+    global btn_up, btn_down
+    
     if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
         return False
 
