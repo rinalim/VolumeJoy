@@ -24,5 +24,6 @@ sudo sed -i '1i\\/usr/bin/python /opt/retropie/configs/all/VolumeJoy/volume.py /
 python ./VolumeJoy/setup.py /dev/input/js0
 
 echo
-echo 'Install Completed!!'
-echo
+echo "Setup Completed. Reboot after 3 Seconds."
+sleep 3
+reboot
