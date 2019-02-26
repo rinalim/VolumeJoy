@@ -1,2 +1,2 @@
 # VolumeJoy
-Volume control with Joystick
+Volume control with Joystick for RetoPie
