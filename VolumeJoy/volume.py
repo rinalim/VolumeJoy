@@ -24,7 +24,7 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PNGVOLUME	"/opt/retropie/configs/all/PngVolume/pngvolume"	
+PATH_PNGVOLUME = '/opt/retropie/configs/all/PngVolume/pngvolume'	
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
