@@ -24,7 +24,7 @@ JS_EVENT_INIT = 0x80
 
 CONFIG_DIR = '/opt/retropie/configs/'
 RETROARCH_CFG = CONFIG_DIR + 'all/retroarch.cfg'
-PATH_PNGVOLUME = '/opt/retropie/configs/all/VolumeJoy/pngvolume'	
+PATH_VOLUMEJOY = '/opt/retropie/configs/all/VolumeJoy/'	
 
 event_format = 'IhBB'
 event_size = struct.calcsize(event_format)
@@ -111,7 +111,7 @@ def process_event(event):
             vol = 100
 
         run_cmd("killall pngvolume")
-        os.system(PATH_PNGVOLUME + " -b0x0000 -l30000 -t1000 volume" + str(vol/6) + ".png &")
+        os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 + " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
 
     return True
 
