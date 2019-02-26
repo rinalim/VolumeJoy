@@ -1,5 +1,5 @@
 # VolumeJoy
-Volume control with Joystick for RetoPie
+Volume control with Joystick for RetroPie
 
 ## Install
 <pre><code>
