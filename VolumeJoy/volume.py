@@ -110,7 +110,7 @@ def process_event(event):
         if vol > 95:
             vol = 100
 
-        run_cmd("killall pngvolume")
+        run_cmd("killall -9 pngvolume")
         os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
 
     return True
