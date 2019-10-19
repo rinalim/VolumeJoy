@@ -111,7 +111,8 @@ def process_event(event):
  
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         run_cmd("amixer set PCM -- " + str(vol) + "%")
-        print()
+        lines = run_cmd("ps -aux | grep python").splitlines()
+        print len(lines)
         run_cmd("killall -9 pngvolume")
         os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
 
