@@ -95,23 +95,23 @@ def process_event(event):
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         #print vol
 
+        vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         if js_number == btn_down:
-            print "Decrease volume..."
-            vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-            run_cmd("amixer set PCM -- " + str(vol-6) + "%")
+            vol = (vol/6-1)*6+4
+            if vol < 5:
+                vol = 0
+            print "Decrease volume... " + str(vol)
         elif js_number == btn_up:
-            print "Increase volume..."
-            vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-            run_cmd("amixer set PCM -- " + str(vol+6) + "%")
+            vol = (vol/6+1)*6+4
+            if vol > 95:
+                vol = 100
+            print "Increase volume... " + str(vol)
         else:
             return False
  
-        vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-        if vol < 5:
-            vol = 0
-        if vol > 95:
-            vol = 100
-
+        #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
+        run_cmd("amixer set PCM -- " + str(vol) + "%")
+        print()
         run_cmd("killall -9 pngvolume")
         os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
 
