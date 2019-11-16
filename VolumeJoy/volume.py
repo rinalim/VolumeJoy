@@ -38,6 +38,11 @@ def run_cmd(cmd):
     output = p.communicate()[0]
     return output
 
+def kill_proc(name):
+    ps_grep = run_cmd("ps -aux | grep " + name + "| grep -v 'grep'")
+    if len(ps_grep) > 1: 
+        os.system("killall " + name)
+
 def signal_handler(signum, frame):
     close_fds(js_fds)
     sys.exit(0)
@@ -111,9 +116,10 @@ def process_event(event):
  
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         run_cmd("amixer set PCM -- " + str(vol) + "%")
-        lines = run_cmd("ps -aux | grep pngvolume").splitlines()
-        if len(lines) > 2:
-            run_cmd("killall -9 pngvolume")
+        #lines = run_cmd("ps -aux | grep pngvolume").splitlines()
+        #if len(lines) > 2:
+        #    run_cmd("killall -9 pngvolume")
+        kill_proc("pngvolume")
         os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
 
     return True
