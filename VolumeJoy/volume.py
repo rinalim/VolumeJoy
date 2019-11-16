@@ -100,12 +100,12 @@ def process_event(event):
             vol = (vol/6-1)*6+4
             if vol < 5:
                 vol = 0
-            print "Decrease volume... " + str(vol)
+            #print "Decrease volume... " + str(vol)
         elif js_number == btn_up:
             vol = (vol/6+1)*6+4
             if vol > 95:
                 vol = 100
-            print "Increase volume... " + str(vol)
+            #print "Increase volume... " + str(vol)
         else:
             return False
  
