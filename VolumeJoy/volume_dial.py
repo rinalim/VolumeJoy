@@ -23,7 +23,7 @@ def is_running(pname):
 def kill_proc(name):
     os.system("pkill " + name)
 
-def ReadVol(vol):
+def ReadAnalog(vol):
     adc=spi.xfer2([1,(8+vol)<<4,0])
     data=((adc[1]&3)<<8)+adc[2]
     return data
@@ -40,7 +40,7 @@ mcp3008=0
 cur_vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
 start_time = 0
 while True :
-    a_1 = ReadVol(mcp3008)
+    a_1 = ReadAnalog(mcp3008)
     #print('readvol : ' , a_1 , 'Voltage:' , 3.3*a_1/1024 )
     read_vol = (1024-int(a_1))/10
     if read_vol > 100:
