@@ -10,7 +10,8 @@ spi.open(0, 0)
 spi.max_speed_hz=1000000
 
 volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100] 
-mcp3008=0 
+TIMEOUT=2
+mcp3008=0
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
