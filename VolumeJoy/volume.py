@@ -31,6 +31,7 @@ event_size = struct.calcsize(event_format)
 js_fds = []
 btn_up = -1
 btn_down = -1
+volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100]
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
@@ -100,28 +101,29 @@ def process_event(event):
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         #print vol
 
-        vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
+        read_vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         if js_number == btn_down:
-            vol = (vol/6-1)*6+4
-            if vol < 5:
+            if vol < 6:
                 vol = 0
-            #print "Decrease volume... " + str(vol)
+            else:
+                vol = volume_step[vol/6-1]
+            print "Decrease volume... " + str(vol)
         elif js_number == btn_up:
-            vol = (vol/6+1)*6+4
-            if vol > 95:
+            if vol > 93:
                 vol = 100
-            #print "Increase volume... " + str(vol)
+            else:
+                vol = volume_step[vol/6+1]
+            print "Increase volume... " + str(vol)
         else:
             return False
  
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         run_cmd("amixer set PCM -- " + str(vol) + "%")
-        #lines = run_cmd("ps -aux | grep pngvolume").splitlines()
-        #if len(lines) > 2:
-        #    run_cmd("killall -9 pngvolume")
-        kill_proc("pngvolume")
-        os.system(PATH_VOLUMEJOY + "pngvolume -b0x0000 -l30000 -t1000 " + PATH_VOLUMEJOY + "volume" + str(vol/6) + ".png &")
-
+        os.system("echo " + HOMEDIR + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
+        if is_running("omxiv-volume") == False:
+            os.system(PATH_VOLUMEJOY + "omxiv-volume " + PATH_VOLUMEJOY + "png/background.png -l 30001 -a center &")
+            os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
+    
     return True
 
 def main():
