@@ -10,8 +10,9 @@
 # https://github.com/RetroPie/RetroPie-Setup/blob/master/scriptmodules/supplementary/runcommand/joy2key.py
 # https://github.com/sana2dang/PauseMode
 
-#sudo cp ./libraspidmx.so.1 /usr/lib
+sudo apt install python-pyudev -y
 
+#sudo cp ./libraspidmx.so.1 /usr/lib
 rm -rf /opt/retropie/configs/all/VolumeJoy/
 mkdir /opt/retropie/configs/all/VolumeJoy/
 cp -f -r ./VolumeJoy /opt/retropie/configs/all/
