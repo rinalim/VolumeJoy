@@ -61,12 +61,12 @@ def InitVol(pin):
     read_vol = (1024-int(a_1))/10
     if read_vol > 100:
         read_vol = 100
-    print("amixer set " + audio_device + " -- " + str(volume_step[read_vol/6]) + "%")
+    #print("amixer set " + audio_device + " -- " + str(volume_step[read_vol/6]) + "%")
     run_cmd("amixer set " + audio_device + " -- " + str(volume_step[read_vol/6]) + "%")
     return read_vol
  
 def SetVol(vol):
-    print("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
+    #print("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
     run_cmd("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
     os.system("echo " + PATH_VOLUMEJOY + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
     if is_running("omxiv-volume") == False:
