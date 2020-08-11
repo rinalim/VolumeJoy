@@ -24,11 +24,26 @@ GPIO.setup(upPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(downPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 buttonPressedTime = None
 
-def upClicked(pin):
-    print str(pin) + " clicked"
-
-def downClicked(pin):
-    print "Up click"
+def buttonClicked(pin):
+    read_vol = int(run_cmd("amixer get " + audio_device + " | grep -o [0-9]*%|sed 's/%//'"))
+    if pin == downPin
+        if read_vol < 6:
+            vol = 0
+        else:
+            vol = volume_step[read_vol/6-1]
+        #print "Decrease volume... " + str(vol)
+    elif pin == upPin:
+        if read_vol > 93:
+            vol = 100
+        else:
+            vol = volume_step[read_vol/6+1]
+        #print "Increase volume... " + str(vol)
+    run_cmd("amixer set "  + audio_device + " -- " + str(vol) + "%")
+    start_time = datetime.now()
+    os.system("echo " + PATH_VOLUMEJOY + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
+    if is_running("omxiv-volume") == False:
+        os.system(PATH_VOLUMEJOY + "omxiv-volume " + PATH_VOLUMEJOY + "png/background.png -l 30001 -a center &")
+        os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
 
 
 def run_cmd(cmd):
@@ -75,8 +90,8 @@ cur_vol = InitVol(mcp3008)
 cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
 audio_device = cmd.split(',')[0].replace("'","")
 # subscribe to button presses
-GPIO.add_event_detect(upPin, GPIO.FALLING, callback=upClicked, bouncetime = 300)
-GPIO.add_event_detect(downPin, GPIO.FALLING, callback=upClicked, bouncetime = 300)
+GPIO.add_event_detect(upPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
+GPIO.add_event_detect(downPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
 
 while True :
     a_1 = Read(mcp3008)
