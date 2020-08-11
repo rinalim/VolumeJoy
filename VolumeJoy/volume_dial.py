@@ -12,8 +12,9 @@ spi.open(0, 0)
 spi.max_speed_hz=1000000
 
 volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100] 
-TIMEOUT=2
-mcp3008=0
+mcp3008 = 0
+TIMEOUT = 2
+start_time = 0
 audio_device = 'PCM'
 
 def run_cmd(cmd):
@@ -55,7 +56,6 @@ def SetVol(vol):
         os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
     return vol
 
-start_time = 0
 cur_vol = InitVol(mcp3008)
 cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
 audio_device = cmd.split(',')[0].replace("'","")
