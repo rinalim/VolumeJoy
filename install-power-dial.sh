@@ -19,9 +19,7 @@ cp -f -r ./VolumeJoy /opt/retropie/configs/all/
 sudo chmod 755 /opt/retropie/configs/all/VolumeJoy/omxiv-volume
 
 sudo sed -i '/VolumeJoy/d' /opt/retropie/configs/all/autostart.sh
-sudo sed -i '1i\\/usr/bin/python /opt/retropie/configs/all/VolumeJoy/volume.py /dev/input/js0 &' /opt/retropie/configs/all/autostart.sh
-
-python ./VolumeJoy/setup.py /dev/input/js0
+sudo sed -i '1i\\/usr/bin/python /opt/retropie/configs/all/VolumeJoy/volume_power_dial.py &'
 
 echo
 echo "Setup Completed. Reboot after 3 Seconds."
