@@ -22,6 +22,7 @@ debounceSeconds = 0.01
 
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+buttonPressedTime = None
 
 def buttonStateChanged(pin):
     global buttonPressedTime
