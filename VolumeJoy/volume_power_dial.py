@@ -6,7 +6,7 @@ from subprocess import *
 from datetime import datetime
 import RPi.GPIO as GPIO
 
-HOMEDIR="/opt/retropie/configs/all/VolumeJoy/"
+PATH_VOLUMEJOY="/opt/retropie/configs/all/VolumeJoy/"
 
 spi=spidev.SpiDev()
 spi.open(0, 0)
@@ -14,6 +14,7 @@ spi.max_speed_hz=1000000
 
 volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100] 
 mcp3008=0 
+audio_device = 'PCM'
 TIMEOUT=2
 shutdownPin = 5
 # button debounce time in seconds
@@ -59,21 +60,23 @@ def InitVol(pin):
     read_vol = (1024-int(a_1))/10
     if read_vol > 100:
         read_vol = 100
-    print("amixer set PCM -- " + str(volume_step[read_vol/6]) + "%")
-    run_cmd("amixer set PCM -- " + str(read_vol) + "%")
+    print("amixer set " + audio_device + " -- " + str(volume_step[read_vol/6]) + "%")
+    run_cmd("amixer set " + audio_device + " -- " + str(volume_step[read_vol/6]) + "%")
     return read_vol
  
 def SetVol(vol):
-    print("amixer set PCM -- " + str(volume_step[vol/6]) + "%")
-    run_cmd("amixer set PCM -- " + str(vol) + "%")
-    os.system("echo " + HOMEDIR + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
+    print("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
+    run_cmd("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
+    os.system("echo " + PATH_VOLUMEJOY + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
     if is_running("omxiv-volume") == False:
-        os.system(HOMEDIR + "omxiv-volume " + HOMEDIR + "png/background.png -l 30001 -a center &")
-        os.system(HOMEDIR + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
+        os.system(PATH_VOLUMEJOY + "omxiv-volume " + PATH_VOLUMEJOY + "png/background.png -l 30001 -a center &")
+        os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
     return vol
 
 start_time = 0
 cur_vol = InitVol(mcp3008)
+cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
+audio_device = cmd.split(',')[0].replace("'","")
 # subscribe to button presses
 GPIO.add_event_detect(shutdownPin, GPIO.BOTH, callback=buttonStateChanged)
 
