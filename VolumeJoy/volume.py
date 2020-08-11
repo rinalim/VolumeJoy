@@ -35,6 +35,7 @@ btn_down = -1
 volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100]
 TIMEOUT = 2
 start_time = 0
+audio_device = 'PCM'
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
@@ -112,7 +113,7 @@ def process_event(event):
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
         #print vol
 
-        read_vol = int(run_cmd("amixer get HDMI|grep -o [0-9]*%|sed 's/%//'"))
+        read_vol = int(run_cmd("amixer get " + audio_device + " | grep -o [0-9]*%|sed 's/%//'"))
         if js_number == btn_down:
             if read_vol < 6:
                 vol = 0
@@ -129,7 +130,7 @@ def process_event(event):
             return False
  
         #vol = int(run_cmd("amixer get PCM|grep -o [0-9]*%|sed 's/%//'"))
-        run_cmd("amixer set HDMI -- " + str(vol) + "%")
+        run_cmd("amixer set "  + audio_device + " -- " + str(vol) + "%")
         start_time = datetime.now()
         os.system("echo " + PATH_VOLUMEJOY + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
         if is_running("omxiv-volume") == False:
@@ -140,7 +141,10 @@ def process_event(event):
 
 def main():
     
-    global btn_up, btn_down, start_time
+    global btn_up, btn_down, start_time, audio_device
+    
+    cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
+    audio_device = cmd.split(',')[0].replace("'","")
     
     if os.path.isfile(PATH_VOLUMEJOY + "button.cfg") == False:
         return False
