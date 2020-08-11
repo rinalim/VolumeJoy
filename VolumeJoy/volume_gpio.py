@@ -27,7 +27,7 @@ buttonPressedTime = None
 def upClicked(pin):
     print str(pin) + " clicked"
 
-def upClicked(pin):
+def downClicked(pin):
     print "Up click"
 
 
