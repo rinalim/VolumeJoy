@@ -26,7 +26,7 @@ buttonPressedTime = None
 
 def buttonClicked(pin):
     read_vol = int(run_cmd("amixer get " + audio_device + " | grep -o [0-9]*%|sed 's/%//'"))
-    if pin == downPin
+    if pin == downPin:
         if read_vol < 6:
             vol = 0
         else:
