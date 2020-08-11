@@ -20,7 +20,8 @@ upPin = 32
 downPin = 36
 
 GPIO.setmode(GPIO.BOARD)
-GPIO.setup(shutdownPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(upPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(downPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 buttonPressedTime = None
 
 def upClicked(pin):
