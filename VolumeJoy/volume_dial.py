@@ -49,7 +49,7 @@ def InitVol(pin):
 def SetVol(vol):
     print("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
     run_cmd("amixer set " + audio_device + " -- " + str(volume_step[vol/6]) + "%")
-    #os.system("echo " + HOMEDIR + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
+    os.system("echo " + PATH_VOLUMEJOY + "png/volume" + str(vol/6) + ".png > /tmp/volume.txt")
     if is_running("omxiv-volume") == False:
         os.system(PATH_VOLUMEJOY + "omxiv-volume " + PATH_VOLUMEJOY + "png/background.png -l 30001 -a center &")
         os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
