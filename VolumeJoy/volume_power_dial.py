@@ -17,6 +17,8 @@ mcp3008=0
 audio_device = 'PCM'
 TIMEOUT=2
 shutdownPin = 5
+# if button pressed for at least this long then shut down
+shutdownMinSeconds = 3
 # button debounce time in seconds
 debounceSeconds = 0.01
 
@@ -28,12 +30,12 @@ def buttonStateChanged(pin):
     global buttonPressedTime
 
     if not (GPIO.input(pin)):
-        # button is down
-        if buttonPressedTime is None:
-            buttonPressedTime = datetime.now()
+        buttonPressedTime is None:
     else:
-        # button is up
-        call(['shutdown', '-h', 'now'], shell=False)
+        buttonPressedTime = datetime.now()
+        time.sleep(shutdownMinSeconds)
+        if (GPIO.input(pin) and buttonPressedTime != None):
+            call(['shutdown', '-h', 'now'], shell=False)
 
 def run_cmd(cmd):
     # runs whatever in the cmd variable
