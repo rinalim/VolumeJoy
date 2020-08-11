@@ -75,8 +75,8 @@ cur_vol = InitVol(mcp3008)
 cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
 audio_device = cmd.split(',')[0].replace("'","")
 # subscribe to button presses
-GPIO.add_event_detect(upPin, GPIO.FALLING, callback=upClicked)
-GPIO.add_event_detect(downPin, GPIO.FALLING, callback=upClicked)
+GPIO.add_event_detect(upPin, GPIO.FALLING, callback=upClicked, bouncetime = 300)
+GPIO.add_event_detect(downPin, GPIO.FALLING, callback=upClicked, bouncetime = 300)
 
 while True :
     a_1 = Read(mcp3008)
