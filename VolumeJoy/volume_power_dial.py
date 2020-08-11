@@ -1,3 +1,5 @@
+#!/usr/bin/python
+
 import time, os
 import spidev
 from subprocess import *
