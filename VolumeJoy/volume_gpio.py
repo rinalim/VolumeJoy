@@ -23,9 +23,9 @@ downPin = 36
 GPIO.setmode(GPIO.BOARD)
 GPIO.setup(upPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 GPIO.setup(downPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
-buttonPressedTime = None
 
 def buttonClicked(pin):
+    global start_time
     read_vol = int(run_cmd("amixer get " + audio_device + " | grep -o [0-9]*%|sed 's/%//'"))
     if pin == downPin:
         if read_vol < 6:
