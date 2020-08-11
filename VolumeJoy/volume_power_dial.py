@@ -30,7 +30,7 @@ def buttonStateChanged(pin):
     global buttonPressedTime
 
     if not (GPIO.input(pin)):
-        buttonPressedTime is None:
+        buttonPressedTime == None
     else:
         buttonPressedTime = datetime.now()
         time.sleep(shutdownMinSeconds)
