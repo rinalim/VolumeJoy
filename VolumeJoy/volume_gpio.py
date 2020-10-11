@@ -1,19 +1,13 @@
 #!/usr/bin/python
 
 import time, os
-import spidev
 from subprocess import *
 from datetime import datetime
 import RPi.GPIO as GPIO
 
 PATH_VOLUMEJOY="/opt/retropie/configs/all/VolumeJoy/"
 
-spi=spidev.SpiDev()
-spi.open(0, 0)
-spi.max_speed_hz=1000000
-
 volume_step = [0,6,12,18,24,30,36,42,48,54,60,66,72,79,86,93,100] 
-mcp3008 = 0 
 TIMEOUT = 2
 start_time = 0
 audio_device = 'PCM'
