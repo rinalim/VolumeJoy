@@ -63,7 +63,6 @@ def Read(pin):
     return data
 
 def InitVol(pin):
-    a_1 = Read(pin)
     read_vol = (1024-int(a_1))/10
     if read_vol > 100:
         read_vol = 100
@@ -80,7 +79,6 @@ def SetVol(vol):
         os.system(PATH_VOLUMEJOY + "omxiv-volume /tmp/volume.txt -f -t 5 -T blend --duration 20 -l 30002 -a center &")
     return vol
 
-cur_vol = InitVol(mcp3008)
 cmd = run_cmd("amixer | grep Simple | sed 's/Simple mixer control //'")
 audio_device = cmd.split(',')[0].replace("'","")
 # subscribe to button presses
@@ -88,7 +86,6 @@ GPIO.add_event_detect(upPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 
 GPIO.add_event_detect(downPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
 
 while True :
-    a_1 = Read(mcp3008)
     read_vol = (1024-int(a_1))/10
     if read_vol > 100:
         read_vol = 100
