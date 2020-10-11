@@ -86,14 +86,6 @@ GPIO.add_event_detect(upPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 
 GPIO.add_event_detect(downPin, GPIO.FALLING, callback=buttonClicked, bouncetime = 300)
 
 while True :
-    read_vol = (1024-int(a_1))/10
-    if read_vol > 100:
-        read_vol = 100
-    if read_vol/6 != cur_vol/6:
-        if read_vol-cur_vol != 1 and read_vol-cur_vol != -1:
-            cur_vol = SetVol(read_vol)
-            start_time = datetime.now()
- 
     if start_time == 0:
         time.sleep(0.5)
     else:
